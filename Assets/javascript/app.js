@@ -22,15 +22,15 @@ $(document).ready(function(){
         var destination = $("#destination").val().trim();
         var frequency = $("#frequency").val().trim();
         // FIRST TIME CONVERTED
-        var firstTrain = moment($("#first-train").val().trim(), "hh:mm").subtract(1, "years").format("X");
-     
-/*
+        var firstTrain = $("#first-train").val().trim();
+        var formatFirstTrain = moment(firstTrain, "hh:mm").subtract(1, "years");
+
             console.log(trainName);
             console.log(destination);
             console.log(firstTrain);
             console.log(frequency);
-            console.log(currentTime);
-    */
+            console.log(formatFirstTrain);
+    
 
          //CODE FOR HANDLING THE PUSH
          database.ref().push({
@@ -60,27 +60,27 @@ $(document).ready(function(){
             var firebaseFrequency = childSnapshot.val().frequency;
 
             //LOG EVERYTHING THATS COMING OUT OF SNAPSHOT
-            console.log(childSnapshot.val().trainName);
-            console.log(childSnapshot.val().destination);
-            console.log(childSnapshot.val().firstTrain);
-            console.log(childSnapshot.val().frequency);
+           console.log("----------------")
+            console.log(firebaseName);
+            console.log(firebaseDestination);
+            console.log(firebaseFirstTrain);
+            console.log(firebaseFrequency);
+            console.log("----------------")
+
     console.log("start")
-        //CURRENT TIME
-        var currentTime = moment();
-        //MAKE TRAIN TIME NEATER
-        var trainTime = moment.unix(firebaseFirstTrain).format("hh:mm");
-        console.log(trainTime);
+    
         //TIME DIFFERENCE
-        var diffTime = currentTime.diff(moment(trainTime), "minutes");
+        var diffTime = moment().diff(moment(firebaseFirstTrain), "minutes");
         console.log(diffTime);
         //TIME APART (REMAINDER)
         var trainRemain = diffTime % firebaseFrequency;
         console.log(trainRemain);
+        console.log(firebaseFrequency);
         //MIN UNTIL ARRIVAL
         var minUntil = firebaseFrequency - trainRemain;
         console.log(minUntil);
         //NEXT ARRIVAL TIME
-        var nextArrival = currentTime.add(minUntil, "minutes").format("hh:mm A");
+        var nextArrival = moment().add(minUntil, "minutes").format("hh:mm A");
     console.log("end")
             //FULL LIST OF ITEMS TO THE TABLE
             $("#new-train").append("<tr><td>" + firebaseName + 
@@ -103,7 +103,7 @@ $(document).ready(function(){
             $("#frequency").text(snapshot.val().frequency);
 
         }); 
-/*          //LIVE CLOCK IN HEADER
+          //LIVE CLOCK IN HEADER
     var datetime = null,
             date = null;
 
@@ -116,7 +116,7 @@ $(document).ready(function(){
         datetime = $('#current-time')
         update();
         setInterval(update, 1000);
-    });   */
+    });   
 
 });
 
