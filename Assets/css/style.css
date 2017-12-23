@@ -1,3 +1,15 @@
+body {
+	font-family: Tahoma, Geneva, sans-serif;
+}
+.jumbotron {
+	text-align: center;
+}
+
+h2, h3 {
+	font-size: 40px;
+}
+
 th {
 	margin: 20px;
 }
+
